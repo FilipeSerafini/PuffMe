@@ -11,7 +11,11 @@ import SpriteKit
 class MenuScene: SKScene {
     
     override func didMove(to view: SKView) {
+        let scene = GameScene(size: CGSize(width: size.width, height: size.height))
+        scene.scaleMode = .aspectFill
         
+        let transition = SKTransition.fade(withDuration: 1.0)
+        self.view?.presentScene(scene, transition: transition)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

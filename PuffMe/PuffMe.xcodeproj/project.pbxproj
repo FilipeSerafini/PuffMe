@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A797484D2AC3411E00660AC4 /* Puff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A797484C2AC3411E00660AC4 /* Puff.swift */; };
+		A797484F2AC3412C00660AC4 /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A797484E2AC3412C00660AC4 /* Animal.swift */; };
+		A79748512AC3446F00660AC4 /* Urchin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79748502AC3446F00660AC4 /* Urchin.swift */; };
+		A79748532AC3449700660AC4 /* Starfish.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79748522AC3449700660AC4 /* Starfish.swift */; };
+		A79748552AC344AE00660AC4 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79748542AC344AE00660AC4 /* Player.swift */; };
+		A79748572AC34B9100660AC4 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79748562AC34B9100660AC4 /* Utility.swift */; };
 		B1FFC5F22AC215B8007EC192 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FFC5F12AC215B8007EC192 /* AppDelegate.swift */; };
 		B1FFC5F42AC215B9007EC192 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B1FFC5F32AC215B9007EC192 /* GameScene.sks */; };
 		B1FFC5F62AC215B9007EC192 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B1FFC5F52AC215B9007EC192 /* Actions.sks */; };
@@ -20,6 +26,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A797484C2AC3411E00660AC4 /* Puff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puff.swift; sourceTree = "<group>"; };
+		A797484E2AC3412C00660AC4 /* Animal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
+		A79748502AC3446F00660AC4 /* Urchin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Urchin.swift; sourceTree = "<group>"; };
+		A79748522AC3449700660AC4 /* Starfish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starfish.swift; sourceTree = "<group>"; };
+		A79748542AC344AE00660AC4 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		A79748562AC34B9100660AC4 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		B1FFC5EE2AC215B8007EC192 /* PuffMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PuffMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1FFC5F12AC215B8007EC192 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1FFC5F32AC215B9007EC192 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -44,6 +56,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A797484B2AC340E600660AC4 /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				A79748542AC344AE00660AC4 /* Player.swift */,
+				A797484E2AC3412C00660AC4 /* Animal.swift */,
+				A79748522AC3449700660AC4 /* Starfish.swift */,
+				A79748502AC3446F00660AC4 /* Urchin.swift */,
+				A797484C2AC3411E00660AC4 /* Puff.swift */,
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
 		B1FFC5E52AC215B8007EC192 = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +87,8 @@
 		B1FFC5F02AC215B8007EC192 /* PuffMe */ = {
 			isa = PBXGroup;
 			children = (
+				A79748562AC34B9100660AC4 /* Utility.swift */,
+				A797484B2AC340E600660AC4 /* Structures */,
 				B1FFC60C2AC21804007EC192 /* GameOver */,
 				B1FFC6092AC21770007EC192 /* Game */,
 				B1FFC6082AC2176C007EC192 /* Menu */,
@@ -174,10 +200,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A79748512AC3446F00660AC4 /* Urchin.swift in Sources */,
 				B1FFC60E2AC21813007EC192 /* GameOverScene.swift in Sources */,
 				B1FFC5F82AC215B9007EC192 /* GameScene.swift in Sources */,
+				A79748572AC34B9100660AC4 /* Utility.swift in Sources */,
+				A79748532AC3449700660AC4 /* Starfish.swift in Sources */,
+				A797484D2AC3411E00660AC4 /* Puff.swift in Sources */,
 				B1FFC60B2AC2178E007EC192 /* MenuScene.swift in Sources */,
+				A797484F2AC3412C00660AC4 /* Animal.swift in Sources */,
 				B1FFC5FA2AC215B9007EC192 /* GameViewController.swift in Sources */,
+				A79748552AC344AE00660AC4 /* Player.swift in Sources */,
 				B1FFC5F22AC215B8007EC192 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,7 +362,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3BP9463775;
+				DEVELOPMENT_TEAM = DFJUFQ6A3N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Puff Me";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
@@ -360,7 +392,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3BP9463775;
+				DEVELOPMENT_TEAM = DFJUFQ6A3N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Puff Me";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";

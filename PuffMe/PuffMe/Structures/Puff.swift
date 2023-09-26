@@ -15,7 +15,7 @@ class Puff : Animal {
         let sprite = SKSpriteNode(color: .yellow, size: CGSize(width: 50, height: 50))
         sprite.position = position
         sprite.name = "puff"
-        super.init(sprite: sprite, direction: direction, lifeTime: lifeTime)
+        super.init(sprite: sprite, lifeTime: lifeTime)
         for _ in 1..<lifeTime {
             sprite.scale(to: CGSize(width: sprite.size.width * changeRate, height: sprite.size.height * changeRate))
         }

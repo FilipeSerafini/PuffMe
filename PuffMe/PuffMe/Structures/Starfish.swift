@@ -8,7 +8,5 @@
 import Foundation
 
 class Starfish : Animal {
-    override func move() {
-        
-    }
+    
 }

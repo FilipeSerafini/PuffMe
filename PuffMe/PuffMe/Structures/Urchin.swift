@@ -8,7 +8,5 @@
 import Foundation
 
 class Urchin : Animal {
-    override func move() {
-        
-    }
+    
 }

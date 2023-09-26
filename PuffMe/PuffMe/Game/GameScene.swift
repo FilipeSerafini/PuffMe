@@ -16,9 +16,7 @@ class GameScene: SKScene {
     
     var currLifetime: Int = 2
     var spawnRate: CGFloat = 1
-    //timers
-    var timerPuff: TimeInterval = 0
-    var timerPuffMax: TimeInterval = 5
+    
     
     
     override func didMove(to view: SKView) {

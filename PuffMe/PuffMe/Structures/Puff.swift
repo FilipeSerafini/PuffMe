@@ -10,8 +10,9 @@ import SpriteKit
 
 class Puff : Animal {
     var changeRate: CGFloat = 1.5
+    var speed: CGFloat = 25
     //var textures: [SKTexture] = []
-    init(direction: CGPoint, lifeTime: Int, position: CGPoint) {
+    init(lifeTime: Int, position: CGPoint, size: CGSize) {
         let sprite = SKSpriteNode(color: .yellow, size: CGSize(width: 50, height: 50))
         sprite.position = position
         sprite.name = "puff"
@@ -21,8 +22,19 @@ class Puff : Animal {
         }
         let grow = SKAction.run(increaseSize)
         let wait = SKAction.wait(forDuration: 1)
+        let move = puffMove(size: size)
         sprite.run(SKAction.repeatForever(SKAction.sequence([grow, wait])))
+        sprite.run(SKAction.repeatForever(move), withKey: "move")
+    }
+    
+    func puffMove(size: CGSize) -> SKAction {
+        let position = generateRandomPointWithin(size: size)
+        let distanceX = sprite.position.x - position.x
+        let distanceY = sprite.position.y - position.y
+        let distanceTotal = sqrt(distanceX*distanceX + distanceY*distanceY)
+        let duration = distanceTotal/speed
         
+        return SKAction.move(to: position, duration: duration)
     }
     
     func increaseSize() {

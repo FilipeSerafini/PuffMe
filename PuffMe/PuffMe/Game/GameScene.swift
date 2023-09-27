@@ -194,9 +194,8 @@ class GameScene: SKScene {
         //add puff to screen and array
         addChild(puff.sprite)
         puffs.append(puff)
-        puff.puffMove(size: size)
-        
     }
+    
     func generateStar() {
         //creates new star
         if player.hp < 3 {
@@ -269,7 +268,7 @@ class GameScene: SKScene {
     func increaseDifficulty() {
         spawnRate *= 0.9
         urchinSpawnRate *= 0.9
-        if let spawnAction = self.action(forKey: "spawnPuffs"){
+        if self.action(forKey: "spawnPuffs") != nil{
             let updatedSpawnAction = SKAction.sequence([
                 SKAction.run(generatePuff),
                 SKAction.wait(forDuration: spawnRate)
@@ -277,7 +276,7 @@ class GameScene: SKScene {
             let updatedSpawnForeverAction = SKAction.repeatForever(updatedSpawnAction)
             self.run(updatedSpawnForeverAction, withKey: "spawnPuffs")
         }
-        if let spawnAction = self.action(forKey: "spawnUrchin"){
+        if self.action(forKey: "spawnUrchin") != nil{
             let updatedSpawnAction = SKAction.sequence([
                 SKAction.wait(forDuration: spawnRate),
                 SKAction.run(generateUrchin)

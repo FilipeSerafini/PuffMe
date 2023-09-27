@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A5FCFFFD2AC49E0000D381E8 /* HapticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FCFFFC2AC49E0000D381E8 /* HapticService.swift */; };
+		A5FCFFFF2AC4A45500D381E8 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FCFFFE2AC4A45500D381E8 /* SoundManager.swift */; };
 		A797484D2AC3411E00660AC4 /* Puff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A797484C2AC3411E00660AC4 /* Puff.swift */; };
 		A797484F2AC3412C00660AC4 /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A797484E2AC3412C00660AC4 /* Animal.swift */; };
 		A79748512AC3446F00660AC4 /* Urchin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79748502AC3446F00660AC4 /* Urchin.swift */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A5FCFFFC2AC49E0000D381E8 /* HapticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticService.swift; sourceTree = "<group>"; };
+		A5FCFFFE2AC4A45500D381E8 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		A797484C2AC3411E00660AC4 /* Puff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puff.swift; sourceTree = "<group>"; };
 		A797484E2AC3412C00660AC4 /* Animal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
 		A79748502AC3446F00660AC4 /* Urchin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Urchin.swift; sourceTree = "<group>"; };
@@ -56,6 +60,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A5FCFFFB2AC49DEA00D381E8 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				A79748562AC34B9100660AC4 /* Utility.swift */,
+				A5FCFFFC2AC49E0000D381E8 /* HapticService.swift */,
+				A5FCFFFE2AC4A45500D381E8 /* SoundManager.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		A797484B2AC340E600660AC4 /* Structures */ = {
 			isa = PBXGroup;
 			children = (
@@ -87,7 +101,7 @@
 		B1FFC5F02AC215B8007EC192 /* PuffMe */ = {
 			isa = PBXGroup;
 			children = (
-				A79748562AC34B9100660AC4 /* Utility.swift */,
+				A5FCFFFB2AC49DEA00D381E8 /* Utility */,
 				A797484B2AC340E600660AC4 /* Structures */,
 				B1FFC60C2AC21804007EC192 /* GameOver */,
 				B1FFC6092AC21770007EC192 /* Game */,
@@ -204,10 +218,12 @@
 				B1FFC60E2AC21813007EC192 /* GameOverScene.swift in Sources */,
 				B1FFC5F82AC215B9007EC192 /* GameScene.swift in Sources */,
 				A79748572AC34B9100660AC4 /* Utility.swift in Sources */,
+				A5FCFFFF2AC4A45500D381E8 /* SoundManager.swift in Sources */,
 				A79748532AC3449700660AC4 /* Starfish.swift in Sources */,
 				A797484D2AC3411E00660AC4 /* Puff.swift in Sources */,
 				B1FFC60B2AC2178E007EC192 /* MenuScene.swift in Sources */,
 				A797484F2AC3412C00660AC4 /* Animal.swift in Sources */,
+				A5FCFFFD2AC49E0000D381E8 /* HapticService.swift in Sources */,
 				B1FFC5FA2AC215B9007EC192 /* GameViewController.swift in Sources */,
 				A79748552AC344AE00660AC4 /* Player.swift in Sources */,
 				B1FFC5F22AC215B8007EC192 /* AppDelegate.swift in Sources */,
@@ -362,13 +378,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DFJUFQ6A3N;
+				DEVELOPMENT_TEAM = 3MS8Y2RCJZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Puff Me";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -392,13 +409,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DFJUFQ6A3N;
+				DEVELOPMENT_TEAM = 3MS8Y2RCJZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Puff Me";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

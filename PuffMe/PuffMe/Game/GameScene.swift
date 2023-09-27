@@ -89,7 +89,7 @@ class GameScene: SKScene {
         if !isPaused{
             //generates star if player hp is not full
             if player.hp < 3 && star == nil {
-                run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generateStar), SKAction.wait(forDuration: starSpawnTime)])))
+                run(SKAction.sequence([SKAction.run(generateStar), SKAction.wait(forDuration: starSpawnTime)]))
             }
             
             //checks for playes life
@@ -128,17 +128,15 @@ class GameScene: SKScene {
                     puffTouch(puff: puff)
                 }
                 //touch urchin
-                
+                if let node = self.atPoint(location) as? SKSpriteNode, node.name == "urchin" {
+                    urchinTouch()
+                }
                 //touch star
                 if let node = self.atPoint(location) as? SKSpriteNode, node.name == "starfish" {
                     starTouch()
                 }
             }
-            //touch urchin
-            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "urchin" {
-                urchinTouch()
-            }
-            //touch star
+            
             //pause Button
             if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseButton" {
                 if isPaused {

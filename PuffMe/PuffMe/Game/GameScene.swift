@@ -10,7 +10,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    //charcters
+    //characters
     var puffs: [Puff] = []
     var urchin: Urchin?
     var star: Starfish?
@@ -20,7 +20,7 @@ class GameScene: SKScene {
     //puff variables
     var currLifetime: Int = 2
     var spawnRate: CGFloat = 1
-
+    
     //star variables
     var starSpeed = 5.0
     var starSpawnTime = 10.0
@@ -36,7 +36,6 @@ class GameScene: SKScene {
     
     override init(size: CGSize) {
         //configure pause menu buttons
-       
         pauseLabel = SKLabelNode(text: "Paused")
         pauseLabel.fontName = "Helvetica-Bold"
         pauseLabel.fontSize = 48
@@ -60,7 +59,7 @@ class GameScene: SKScene {
         pauseButton.position = CGPoint(x: size.width - pauseButton.size.width, y: size.height - pauseButton.size.height)
         pauseButton.zPosition = 1 // Adjust this value to make sure the button is above other nodes.
         
-       
+        
         super.init(size: size)
         addChild(pauseButton)
     }
@@ -71,10 +70,10 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         //generates the score
         generateScoreLabel()
-
+        
         //generates the lifes
         createLifes()
-
+        
         //generates puffs based on spawn rate
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])))
         
@@ -82,27 +81,32 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        //generates star if player hp is not full
-        if player.hp < 3 && star == nil {
-            run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generateStar), SKAction.wait(forDuration: starSpawnTime)])))
-        }
-        
-        //checks for playes life
-        checkLifes()
-        
-        //updates score
-        self.scoreLabel?.text = "Score: \(player.score)"
-        
-        //check puffs lifetime
-        for puff in puffs {
-            if puff.lifeTime > 5 {
-                puff.sprite.removeAllActions()
-                explodePuff(puff: puff)
+        if !isPaused{
+            //generates star if player hp is not full
+            if player.hp < 3 && star == nil {
+                run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generateStar), SKAction.wait(forDuration: starSpawnTime)])))
             }
             
-            //check player Hp
-            if player.hp <= 0 {
-                gameOver()
+            //checks for playes life
+            checkLifes()
+            
+            //updates score
+            self.scoreLabel?.text = "Score: \(player.score)"
+            
+            //check puffs lifetime
+            for puff in puffs {
+                if puff.lifeTime > 5 {
+                    puff.sprite.removeAllActions()
+                    explodePuff(puff: puff)
+                }
+                if puff.lifeTime < 1 {
+                    savePuff(puff: puff)
+                }
+                
+                //check player Hp
+                if player.hp <= 0 {
+                    gameOver()
+                }
             }
         }
     }
@@ -119,7 +123,11 @@ class GameScene: SKScene {
                     puffTouch(puff: puff)
                 }
                 //touch urchin
+                
                 //touch star
+                if let node = self.atPoint(location) as? SKSpriteNode, node.name == "starfish" {
+                    starTouch()
+                }
             }
             //pause Button
             if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseButton" {
@@ -150,18 +158,7 @@ class GameScene: SKScene {
                 let transition = SKTransition.fade(withDuration: 1.0)
                 self.view?.presentScene(scene, transition: transition)
             }
-            //touch puff
-            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "puff" {
-                guard let puff = puffs.first(where: {$0.sprite.hashValue == node.hashValue}) else {return}
-                
-                puffTouch(puff: puff)
-            }
-            //touch urchin
             
-            //touch star
-            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "starfish" {
-                starTouch()
-            }
         }
     }
     
@@ -240,6 +237,8 @@ class GameScene: SKScene {
         let transition = SKTransition.fade(withDuration: 1.0)
         self.view?.presentScene(scene, transition: transition)
     }
+    
+    
     func generateScoreLabel() {
         self.scoreLabel = SKLabelNode(text: "Score: 0")
         self.scoreLabel?.position = CGPoint(x: size.width/2, y: size.height - 20)
@@ -252,6 +251,7 @@ class GameScene: SKScene {
             addChild(scoreLabel)
         }
     }
+    
     func createLifes() {
         lifes = []
         for i in 0..<player.hp {

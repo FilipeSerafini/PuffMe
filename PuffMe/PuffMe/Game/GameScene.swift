@@ -21,6 +21,9 @@ class GameScene: SKScene {
     var currLifetime: Int = 2
     var spawnRate: CGFloat = 1
     
+    //urchin variables
+    var urchinSpawnRate: CGFloat = 22
+    
     //star variables
     var starSpeed = 5.0
     var starSpawnTime = 10.0
@@ -77,6 +80,8 @@ class GameScene: SKScene {
         //generates puffs based on spawn rate
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])))
         
+        //generates urchins based on spawn rate
+        run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generateUrchin), SKAction.wait(forDuration: urchinSpawnRate)])))
         
     }
     
@@ -84,7 +89,7 @@ class GameScene: SKScene {
         if !isPaused{
             //generates star if player hp is not full
             if player.hp < 3 && star == nil {
-                run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generateStar), SKAction.wait(forDuration: starSpawnTime)])))
+                run(SKAction.sequence([SKAction.run(generateStar), SKAction.wait(forDuration: starSpawnTime)]))
             }
             
             //checks for playes life
@@ -123,12 +128,15 @@ class GameScene: SKScene {
                     puffTouch(puff: puff)
                 }
                 //touch urchin
-                
+                if let node = self.atPoint(location) as? SKSpriteNode, node.name == "urchin" {
+                    urchinTouch()
+                }
                 //touch star
                 if let node = self.atPoint(location) as? SKSpriteNode, node.name == "starfish" {
                     starTouch()
                 }
             }
+            
             //pause Button
             if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseButton" {
                 if isPaused {
@@ -163,7 +171,8 @@ class GameScene: SKScene {
     }
     
     func urchinTouch() {
-        
+        player.hp -= 1
+        removeAnimal(animal: urchin!)
     }
     
     func starTouch() {
@@ -204,6 +213,33 @@ class GameScene: SKScene {
     }
     
     func generateUrchin() {
+        //create new urchin
+        urchin = Urchin(lifeTime: 5, position: generateRandomPointWithin(size: size))
+        addChild(urchin!.sprite)
+        
+        
+        let firstRandomPoint = generateRandomPointWithin(size: size)
+        let secondRandomPint = generateRandomPointWithin(size: size)
+        let thirdRandomPint = generateRandomPointWithin(size: size)
+        let rotationAngle = CGFloat.pi
+        let rotationDurantion = 2.0
+        
+        let appear = SKAction.scale(to: 1, duration: 1)
+        let rotationAction = SKAction.repeatForever(SKAction.rotate(byAngle: rotationAngle, duration: rotationDurantion))
+        let firstMove = SKAction.move(to: firstRandomPoint, duration: 2.5)
+        let secondMove = SKAction.move(to: secondRandomPint, duration: 2.5)
+        let thirdMove = SKAction.move(to: thirdRandomPint, duration: 2.5)
+        let wait = SKAction.wait(forDuration: 1.5)
+        let killUrchin = SKAction.removeFromParent()
+        
+        let actions = [appear, firstMove, wait, secondMove, wait, thirdMove, wait, wait, killUrchin]
+        
+        urchin!.sprite.run(SKAction.sequence(actions))
+        urchin!.sprite.run(rotationAction)
+
+    }
+    
+    func moveUrchin() {
         
     }
     

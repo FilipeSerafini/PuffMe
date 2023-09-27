@@ -31,7 +31,7 @@ class GameScene: SKScene {
         
         //generates star if player hp is not full
         if player.hp < 3 {
-            run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generateStar), SKAction.wait(forDuration: 5)])))
+            run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generateStar), SKAction.wait(forDuration: starSpawnTimegi)])))
         }
     }
     

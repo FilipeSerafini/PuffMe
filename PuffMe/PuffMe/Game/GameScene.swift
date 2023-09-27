@@ -17,16 +17,34 @@ class GameScene: SKScene {
     var currLifetime: Int = 2
     var spawnRate: CGFloat = 1
     
+    //pause menu buttons
+    var pauseBackToMenu: SKSpriteNode
+    var pauseResume: SKSpriteNode
     
-    
-    override func didMove(to view: SKView) {
+    override init(size: CGSize) {
+        //configure pause menu buttons
+        pauseResume = SKSpriteNode(color: .cyan, size: CGSize(width: 300, height: 50))
+        pauseResume.position = CGPoint(x: size.width/2, y: size.height - 150)
+        pauseResume.name = "pauseResume"
+        pauseBackToMenu = SKSpriteNode(color: .blue, size: CGSize(width: 300, height: 50))
+        pauseBackToMenu.position = CGPoint(x: size.width/2, y: size.height - 250)
+        pauseBackToMenu.name = "pauseBackToMenu"
+        
         let pauseButtonTexture = SKTexture(imageNamed: "pauseButton")
         let pauseButton = SKSpriteNode(texture: pauseButtonTexture)
         pauseButton.name = "pauseButton"
-        pauseButton.position = CGPoint(x: size.width - pauseButton.size.width / 2, y: size.height - pauseButton.size.height / 2)
+        pauseButton.size = CGSize(width: 50, height: 50)
+        pauseButton.position = CGPoint(x: size.width - pauseButton.size.width, y: size.height - pauseButton.size.height)
         pauseButton.zPosition = 1 // Adjust this value to make sure the button is above other nodes.
+        
+        super.init(size: size)
         addChild(pauseButton)
-
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    override func didMove(to view: SKView) {
         
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])))
     }
@@ -55,17 +73,6 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            //pause Button
-            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseButton" {
-                if isPaused {
-                    node.texture = SKTexture(imageNamed: "pauseButton")
-                }
-                else {
-                    node.texture = SKTexture(imageNamed: "playButton")
-                }
-                isPaused.toggle()
-                
-            }
             if(!isPaused){
                 //touch puff
                 if let node = self.atPoint(location) as? SKSpriteNode, node.name == "puff" {
@@ -76,6 +83,35 @@ class GameScene: SKScene {
                 //touch urchin
                 //touch star
             }
+            //pause Button
+            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseButton" {
+                if isPaused {
+                    removeChildren(in: [pauseResume, pauseBackToMenu])
+                }
+                else {
+                    node.texture = SKTexture(imageNamed: "playButton")
+                    addChild(pauseResume)
+                    addChild(pauseBackToMenu)
+                }
+                isPaused.toggle()
+                
+            }
+            else
+            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseResume" {
+                removeChildren(in: [pauseResume, pauseBackToMenu])
+                isPaused.toggle()
+            }
+            else
+            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseBackToMenu" {
+                removeChildren(in: [pauseResume, pauseBackToMenu])
+                isPaused.toggle()
+                let scene = MenuScene(size: CGSize(width: size.width, height: size.height))
+                scene.scaleMode = .aspectFill
+                
+                let transition = SKTransition.fade(withDuration: 1.0)
+                self.view?.presentScene(scene, transition: transition)
+            }
+            
         }
     }
     

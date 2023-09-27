@@ -10,7 +10,7 @@ import SpriteKit
 
 class Puff : Animal {
     var changeRate: CGFloat = 1.5
-    var speed: CGFloat = 25
+    var speed: CGFloat = 40
     //var textures: [SKTexture] = []
     init(lifeTime: Int, position: CGPoint, size: CGSize) {
         let sprite = SKSpriteNode(color: .yellow, size: CGSize(width: 50, height: 50))

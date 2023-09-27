@@ -28,6 +28,7 @@ class GameOverScene: SKScene {
         //show score
         let scoreLabel = SKLabelNode(text: "Your score: \(score)!")
         scoreLabel.fontSize = 20
+        scoreLabel.fontName = "Helvetica-Bold"
         scoreLabel.fontColor = .red
         scoreLabel.position = CGPoint(x: size.width / 2, y: size.height - 200)
         addChild(scoreLabel)

@@ -13,17 +13,27 @@ class GameScene: SKScene {
     var urchin: Urchin?
     var star: Starfish?
     var player: Player = Player()
+    var lifes: [SKSpriteNode] = []
     
     var currLifetime: Int = 2
     var spawnRate: CGFloat = 1
     
+    var scoreLabel: SKLabelNode?
+    
+    
     
     
     override func didMove(to view: SKView) {
+        generateScoreLabel()
+        createLifes()
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])))
     }
     
     override func update(_ currentTime: TimeInterval) {
+        //checks for playes life
+        checkLifes()
+        //updates score
+        self.scoreLabel?.text = "Score: \(player.score)"
         
         //check puffs lifetime
         for puff in puffs {
@@ -99,6 +109,39 @@ class GameScene: SKScene {
     }
     func gameOver() {
         
+    }
+    func generateScoreLabel() {
+        self.scoreLabel = SKLabelNode(text: "Score: 0")
+        self.scoreLabel?.position = CGPoint(x: size.width/2, y: size.height - 20)
+        self.scoreLabel?.zPosition = 2
+        self.scoreLabel?.fontSize = 20
+        self.scoreLabel?.fontColor = .white
+        self.scoreLabel?.fontName = "Helvetica-Bold"
+        
+        if let scoreLabel = self.scoreLabel {
+            addChild(scoreLabel)
+        }
+    }
+    func createLifes() {
+        lifes = []
+        for i in 0..<player.hp {
+            let life = SKSpriteNode(color: .red, size: CGSize(width: 20, height: 20))
+            life.position = CGPoint(x: 50 + (CGFloat(i) * 40), y: self.size.height - 50)
+            lifes.append(life)
+            addChild(life)
+        }
+    }
+    func checkLifes() {
+        if player.hp < 1 {
+            player.hp = 3
+            gameOver()
+        }
+        if player.hp != lifes.count {
+            for life in lifes {
+                life.removeFromParent()
+            }
+            createLifes()
+        }
     }
 }
 

@@ -21,7 +21,9 @@ class GameScene: SKScene {
     var currLifetime: Int = 2
     var spawnRate: CGFloat = 1
     
+    //urchin variables
     var urchinSpawnRate: CGFloat = 22
+    
     //star variables
     var starSpeed = 5.0
     var starSpawnTime = 10.0
@@ -78,6 +80,8 @@ class GameScene: SKScene {
         //generates puffs based on spawn rate
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])))
         
+        //generates urchins based on spawn rate
+        run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generateUrchin), SKAction.wait(forDuration: urchinSpawnRate)])))
         
     }
     

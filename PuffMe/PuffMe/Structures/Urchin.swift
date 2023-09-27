@@ -10,12 +10,12 @@ import SpriteKit
 
 class Urchin : Animal {
     
-    init(lifeTime: Int, position: CGPoint) {
+    init() {
         let sprite = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
-        sprite.position = position
+        sprite.position = CGPoint(x: -sprite.size.width / 2, y: sprite.size.height / 2)
         sprite.name = "urchin"
         
-        super.init(sprite: sprite, lifeTime: lifeTime)
+        super.init(sprite: sprite)
         
     }
     

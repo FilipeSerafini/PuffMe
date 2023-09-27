@@ -19,18 +19,19 @@ class GameScene: SKScene {
     
     //puff variables
     var currLifetime: Int = 2
-    var spawnRate: CGFloat = 1
+    var spawnRate: CGFloat = 1.8
     
     //urchin variables
-    var urchinSpawnRate: CGFloat = 22
+    var urchinSpawnRate: CGFloat = 23
     
     //star variables
     var starSpeed = 5.0
-    var starSpawnTime = 10.0
+    var starSpawnTime = 60.0
     
     //game variables
     var scoreLabel: SKLabelNode?
-    
+    var highscore = UserDefaults.standard.value(forKey: "highscore") as? Int ?? 0
+
     
     //pause menu buttons
     var pauseLabel: SKLabelNode
@@ -62,7 +63,6 @@ class GameScene: SKScene {
         pauseButton.position = CGPoint(x: size.width - pauseButton.size.width, y: size.height - pauseButton.size.height)
         pauseButton.zPosition = 1 // Adjust this value to make sure the button is above other nodes.
         
-        
         super.init(size: size)
         addChild(pauseButton)
     }
@@ -78,11 +78,12 @@ class GameScene: SKScene {
         createLifes()
         
         //generates puffs based on spawn rate
-        run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])))
-        
+        run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])), withKey: "spawnPuffs")
         //generates urchins based on spawn rate
-        run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generateUrchin), SKAction.wait(forDuration: urchinSpawnRate)])))
-        
+        run(SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: urchinSpawnRate), SKAction.run(generateUrchin)])), withKey: "spawnUrchin")
+        //generates stars bases on spawn rate
+        run(SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: starSpawnTime), SKAction.run(generateStar)])))
+
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -97,6 +98,7 @@ class GameScene: SKScene {
             
             //updates score
             self.scoreLabel?.text = "Score: \(player.score)"
+           
             
             //check puffs lifetime
             for puff in puffs {
@@ -115,7 +117,6 @@ class GameScene: SKScene {
             }
         }
     }
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
@@ -198,23 +199,25 @@ class GameScene: SKScene {
     }
     func generateStar() {
         //creates new star
-        star = Starfish(lifeTime: 1)
-        addChild(star!.sprite)
-        
-        //sequence of actions
-        let appear = SKAction.scale(to: 0.3, duration: 0.5)
-        let move = SKAction.moveTo(x: size.width + star!.sprite.size.width / 2, duration: starSpeed)
-        let removeFromParent = SKAction.removeFromParent()
-        let actions = [appear, move, removeFromParent]
-        let rotateAction = SKAction.rotate(byAngle: .pi, duration: starSpeed)
-        
-        star!.sprite.run(SKAction.repeatForever(rotateAction))
-        star!.sprite.run(SKAction.sequence(actions))
+        if player.hp < 3 {
+            star = Starfish()
+            addChild(star!.sprite)
+            
+            //sequence of actions
+            let appear = SKAction.scale(to: 0.3, duration: 0.5)
+            let move = SKAction.moveTo(x: size.width + star!.sprite.size.width / 2, duration: starSpeed)
+            let removeFromParent = SKAction.removeFromParent()
+            let actions = [appear, move, removeFromParent]
+            let rotateAction = SKAction.rotate(byAngle: .pi, duration: starSpeed)
+            
+            star!.sprite.run(SKAction.repeatForever(rotateAction))
+            star!.sprite.run(SKAction.sequence(actions))
+        }
     }
     
     func generateUrchin() {
         //create new urchin
-        urchin = Urchin(lifeTime: 5, position: generateRandomPointWithin(size: size))
+        urchin = Urchin()
         addChild(urchin!.sprite)
         
         
@@ -239,13 +242,14 @@ class GameScene: SKScene {
 
     }
     
-    func moveUrchin() {
-        
-    }
-    
     func savePuff(puff: Puff) {
         removeAnimal(animal: puff)
         player.increaseScore()
+        
+        //updates difficulty
+        if player.score % 100 == 0 && player.score != 0 && spawnRate > 0.5 {
+            increaseDifficulty()
+        }
     }
     
     func removeAnimal(animal: Animal) {
@@ -263,11 +267,35 @@ class GameScene: SKScene {
     }
     
     func increaseDifficulty() {
+        spawnRate *= 0.9
+        urchinSpawnRate *= 0.9
+        if let spawnAction = self.action(forKey: "spawnPuffs"){
+            let updatedSpawnAction = SKAction.sequence([
+                SKAction.run(generatePuff),
+                SKAction.wait(forDuration: spawnRate)
+            ])
+            let updatedSpawnForeverAction = SKAction.repeatForever(updatedSpawnAction)
+            self.run(updatedSpawnForeverAction, withKey: "spawnPuffs")
+        }
+        if let spawnAction = self.action(forKey: "spawnUrchin"){
+            let updatedSpawnAction = SKAction.sequence([
+                SKAction.wait(forDuration: spawnRate),
+                SKAction.run(generateUrchin)
+            ])
+            let updatedSpawnForeverAction = SKAction.repeatForever(updatedSpawnAction)
+            self.run(updatedSpawnForeverAction, withKey: "spawnUrchin")
+        }
         
     }
     
     func gameOver() {
-        let scene = GameOverScene(size: CGSize(width: size.width, height: size.height), score: player.score)
+        if(player.score > highscore) {
+            highscore = player.score
+            UserDefaults.standard.setValue(player.score, forKey: "highscore")
+            
+        }
+        
+        let scene = GameOverScene(size: CGSize(width: size.width, height: size.height), score: player.score, highscore: highscore)
         scene.scaleMode = .aspectFill
         
         let transition = SKTransition.fade(withDuration: 1.0)

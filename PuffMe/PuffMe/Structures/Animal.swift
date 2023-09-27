@@ -10,11 +10,9 @@ import SpriteKit
 
 class Animal {
     var sprite: SKSpriteNode
-    var lifeTime: Int
     var id = UUID()
     
-    init(sprite: SKSpriteNode, lifeTime: Int) {
+    init(sprite: SKSpriteNode) {
         self.sprite = sprite
-        self.lifeTime = lifeTime
     }
 }

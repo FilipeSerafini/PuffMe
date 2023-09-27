@@ -9,8 +9,10 @@ import Foundation
 import SpriteKit
 
 class GameOverScene: SKScene {
-    var score: Int = 0
-    init(size: CGSize, score: Int) {
+    var score: Int
+    var highscore: Int
+    init(size: CGSize, score: Int, highscore: Int) {
+        self.highscore = highscore
         self.score = score
         super.init(size: size)
     }
@@ -33,14 +35,22 @@ class GameOverScene: SKScene {
         scoreLabel.position = CGPoint(x: size.width / 2, y: size.height - 200)
         addChild(scoreLabel)
         
+        //show highscore
+        let highscoreLabel = SKLabelNode(text: "Highscore: \(highscore)!")
+        highscoreLabel.fontSize = 20
+        highscoreLabel.fontName = "Helvetica-Bold"
+        highscoreLabel.fontColor = .red
+        highscoreLabel.position = CGPoint(x: size.width / 2, y: size.height - 230)
+        addChild(highscoreLabel)
+        
         let restartButton = SKSpriteNode(color: .blue, size: CGSize(width: 300, height: 100))
-        restartButton.position = CGPoint(x: size.width / 2, y: size.height - 270)
+        restartButton.position = CGPoint(x: size.width / 2, y: size.height - 260)
         restartButton.size = CGSize(width: 200, height: 50)
         restartButton.name = "restartButton" // Set a name for identifying the node later
         addChild(restartButton)
         
         let backToMenuButton = SKSpriteNode(color: .cyan, size: CGSize(width: 300, height: 100))
-        backToMenuButton.position = CGPoint(x: size.width / 2, y: size.height - 330)
+        backToMenuButton.position = CGPoint(x: size.width / 2, y: size.height - 320)
         backToMenuButton.size = CGSize(width: 200, height: 50)
         backToMenuButton.name = "backToMenu" // Set a name for identifying the node later
         addChild(backToMenuButton)

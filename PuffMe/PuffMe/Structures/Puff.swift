@@ -11,13 +11,15 @@ import SpriteKit
 class Puff : Animal {
     var changeRate: CGFloat = 1.5
     var speed: CGFloat = 40
+    var lifeTime: Int
     //var textures: [SKTexture] = []
     init(lifeTime: Int, position: CGPoint, size: CGSize) {
         let sprite = SKSpriteNode(color: .yellow, size: CGSize(width: 50, height: 50))
         sprite.position = position
         sprite.name = "puff"
+        self.lifeTime = lifeTime
         sprite.zPosition = -1
-        super.init(sprite: sprite, lifeTime: lifeTime)
+        super.init(sprite: sprite)
         for _ in 1..<lifeTime {
             sprite.scale(to: CGSize(width: sprite.size.width * changeRate, height: sprite.size.height * changeRate))
         }

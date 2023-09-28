@@ -22,7 +22,7 @@ class GameScene: SKScene {
     var spawnRate: CGFloat = 1.8
     
     //urchin variables
-    var urchinSpawnRate: CGFloat = 23
+    var urchinSpawnRate: CGFloat = 20
     
     //star variables
     var starSpeed = 5.0
@@ -31,7 +31,9 @@ class GameScene: SKScene {
     //game variables
     var scoreLabel: SKLabelNode?
     var highscore = UserDefaults.standard.value(forKey: "highscore") as? Int ?? 0
-
+    
+    //tutorial variables
+    var tutorial = UserDefaults.standard.value(forKey: "tutorial") as? Bool ?? false
     
     //pause menu buttons
     var pauseLabel: SKLabelNode
@@ -47,11 +49,13 @@ class GameScene: SKScene {
         pauseLabel.name = "pauseLabel"
         pauseLabel.position = CGPoint(x: size.width/2 ,y: size.height - 100)
         
-        pauseResume = SKSpriteNode(color: .cyan, size: CGSize(width: 300, height: 50))
+        pauseResume = SKSpriteNode(texture: SKTexture(imageNamed: "pauseResume"))
+        pauseResume.scale(to: CGSize(width: 300, height: 50))
         pauseResume.position = CGPoint(x: size.width/2, y: pauseLabel.position.y - pauseLabel.fontSize - 30)
         pauseResume.name = "pauseResume"
         
-        pauseBackToMenu = SKSpriteNode(color: .blue, size: CGSize(width: 300, height: 50))
+        pauseBackToMenu = SKSpriteNode(texture: SKTexture(imageNamed: "pauseBackToMenu"))
+        pauseBackToMenu.scale(to: CGSize(width: 300, height: 50))
         pauseBackToMenu.position = CGPoint(x: size.width/2, y: pauseResume.position.y - pauseResume.size.height - 20)
         pauseBackToMenu.name = "pauseBackToMenu"
         
@@ -71,11 +75,30 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
     override func didMove(to view: SKView) {
+        let background = SKSpriteNode(imageNamed: "background")
+        background.scale(to: CGSize(width: size.width, height: size.height))
+        background.position = CGPoint(x: size.width/2, y: size.height/2)
+        background.zPosition = -2
+        addChild(background)
         //generates the score
         generateScoreLabel()
         
         //generates the lifes
         createLifes()
+        
+        //tutorial
+//        if(!tutorial) {
+//            isPaused = true
+//            let tutorial = TutorialScene(title: "Puff", image: "puff5", tutorialDescription: "futureDescription", size: CGSize(width: size.width/2, height: size.height/2))
+//            addChild(tutorial)
+//            run(SKAction.sequence([SKAction.wait(forDuration: 5), SKAction.run {
+//                tutorial.removeFromParent()
+//            }, SKAction.run {
+//                self.isPaused = false
+//            }]))
+//            UserDefaults.standard.setValue(false, forKey: "tutorialPuff")
+//        }
+        
         
         //generates puffs based on spawn rate
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])), withKey: "spawnPuffs")
@@ -203,10 +226,10 @@ class GameScene: SKScene {
             addChild(star!.sprite)
             
             //sequence of actions
-            let appear = SKAction.scale(to: 0.3, duration: 0.5)
+            
             let move = SKAction.moveTo(x: size.width + star!.sprite.size.width / 2, duration: starSpeed)
             let removeFromParent = SKAction.removeFromParent()
-            let actions = [appear, move, removeFromParent]
+            let actions = [move, removeFromParent]
             let rotateAction = SKAction.rotate(byAngle: .pi, duration: starSpeed)
             
             star!.sprite.run(SKAction.repeatForever(rotateAction))
@@ -226,7 +249,7 @@ class GameScene: SKScene {
         let rotationAngle = CGFloat.pi
         let rotationDurantion = 2.0
         
-        let appear = SKAction.scale(to: 1, duration: 1)
+        //let appear = SKAction.scale(to: 1, duration: 1)
         let rotationAction = SKAction.repeatForever(SKAction.rotate(byAngle: rotationAngle, duration: rotationDurantion))
         let firstMove = SKAction.move(to: firstRandomPoint, duration: 2.5)
         let secondMove = SKAction.move(to: secondRandomPint, duration: 2.5)
@@ -234,7 +257,7 @@ class GameScene: SKScene {
         let wait = SKAction.wait(forDuration: 1.5)
         let killUrchin = SKAction.removeFromParent()
         
-        let actions = [appear, firstMove, wait, secondMove, wait, thirdMove, wait, wait, killUrchin]
+        let actions = [/*appear,*/ firstMove, wait, secondMove, wait, thirdMove, wait, wait, killUrchin]
         
         urchin!.sprite.run(SKAction.sequence(actions))
         urchin!.sprite.run(rotationAction)
@@ -278,9 +301,9 @@ class GameScene: SKScene {
         }
         if self.action(forKey: "spawnUrchin") != nil{
             let updatedSpawnAction = SKAction.sequence([
-                SKAction.wait(forDuration: spawnRate),
-                SKAction.run(generateUrchin)
-            ])
+                SKAction.run(generateUrchin),
+                SKAction.wait(forDuration: urchinSpawnRate)
+                            ])
             let updatedSpawnForeverAction = SKAction.repeatForever(updatedSpawnAction)
             self.run(updatedSpawnForeverAction, withKey: "spawnUrchin")
         }
@@ -318,7 +341,8 @@ class GameScene: SKScene {
     func createLifes() {
         lifes = []
         for i in 0..<player.hp {
-            let life = SKSpriteNode(color: .red, size: CGSize(width: 20, height: 20))
+            let life = SKSpriteNode(texture: SKTexture(imageNamed: "star"))
+            life.scale(to: CGSize(width: 20, height: 20))
             life.position = CGPoint(x: 50 + (CGFloat(i) * 40), y: self.size.height - 50)
             lifes.append(life)
             addChild(life)

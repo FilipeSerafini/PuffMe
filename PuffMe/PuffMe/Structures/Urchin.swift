@@ -9,9 +9,10 @@ import Foundation
 import SpriteKit
 
 class Urchin : Animal {
-    
+    var texture = SKTexture(imageNamed: "urchin")
     init() {
-        let sprite = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
+        let sprite = SKSpriteNode(texture: texture)
+        sprite.scale(to: CGSize(width: 50, height: 50))
         sprite.position = CGPoint(x: -sprite.size.width / 2, y: sprite.size.height / 2)
         sprite.name = "urchin"
         

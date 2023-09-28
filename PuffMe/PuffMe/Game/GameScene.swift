@@ -34,26 +34,30 @@ class GameScene: SKScene {
         
     //pause menu buttons
     var pauseLabel: SKLabelNode
-    var pauseBackToMenu: SKSpriteNode
-    var pauseResume: SKSpriteNode
+    var pauseBackToMenu: SKLabelNode
+    var pauseResume: SKLabelNode
     
     override init(size: CGSize) {
         //configure pause menu buttons
         pauseLabel = SKLabelNode(text: "Paused")
-        pauseLabel.fontName = "Helvetica-Bold"
+        pauseLabel.fontName = "SFProRounded-Bold"
         pauseLabel.fontSize = 48
-        pauseLabel.fontColor = .blue
+        pauseLabel.fontColor = .white
         pauseLabel.name = "pauseLabel"
-        pauseLabel.position = CGPoint(x: size.width/2 ,y: size.height - 100)
+        pauseLabel.position = CGPoint(x: size.width/2 ,y: size.height - 130)
         
-        pauseResume = SKSpriteNode(texture: SKTexture(imageNamed: "pauseResume"))
-        pauseResume.scale(to: CGSize(width: 300, height: 50))
+        pauseResume = SKLabelNode(text: "Resume Game")
+        pauseResume.fontSize = 30
+        pauseResume.fontColor = .white
+        pauseResume.fontName = "SFProRounded-Regular"
         pauseResume.position = CGPoint(x: size.width/2, y: pauseLabel.position.y - pauseLabel.fontSize - 30)
         pauseResume.name = "pauseResume"
         
-        pauseBackToMenu = SKSpriteNode(texture: SKTexture(imageNamed: "pauseBackToMenu"))
-        pauseBackToMenu.scale(to: CGSize(width: 300, height: 50))
-        pauseBackToMenu.position = CGPoint(x: size.width/2, y: pauseResume.position.y - pauseResume.size.height - 20)
+        pauseBackToMenu = SKLabelNode(text: "Return to Menu")
+        pauseBackToMenu.fontSize = 30
+        pauseBackToMenu.fontColor = .white
+        pauseBackToMenu.fontName = "SFProRounded-Bold"
+        pauseBackToMenu.position = CGPoint(x: size.width/2, y: pauseResume.position.y - pauseResume.fontSize - 30)
         pauseBackToMenu.name = "pauseBackToMenu"
         
         let pauseButtonTexture = SKTexture(imageNamed: "pauseButton")
@@ -87,8 +91,6 @@ class GameScene: SKScene {
         createLifes()
         
 
-        
-        while(isPaused){}
         //generates puffs based on spawn rate
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])), withKey: "spawnPuffs")
         //generates urchins based on spawn rate
@@ -114,7 +116,7 @@ class GameScene: SKScene {
             
             //check puffs lifetime
             for puff in puffs {
-                if puff.lifeTime > 5 {
+                if puff.lifeTime > 5 && !puff.isExploding {
                     puff.sprite.removeAllActions()
                     explodePuff(puff: puff)
                 }
@@ -157,7 +159,6 @@ class GameScene: SKScene {
                     removeChildren(in: [pauseResume, pauseBackToMenu, pauseLabel])
                 }
                 else {
-                    node.texture = SKTexture(imageNamed: "playButton")
                     addChild(pauseResume)
                     addChild(pauseBackToMenu)
                     addChild(pauseLabel)
@@ -166,13 +167,13 @@ class GameScene: SKScene {
                 
             }
             else
-            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseResume" {
+            if let node = self.atPoint(location) as? SKLabelNode, node.name == "pauseResume" {
                 vibrate(intensity: .medium)
                 removeChildren(in: [pauseResume, pauseBackToMenu, pauseLabel])
                 isPaused.toggle()
             }
             else
-            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseBackToMenu" {
+            if let node = self.atPoint(location) as? SKLabelNode, node.name == "pauseBackToMenu" {
                 vibrate(intensity: .medium)
                 removeChildren(in: [pauseResume, pauseBackToMenu, pauseLabel])
                 isPaused.toggle()
@@ -279,7 +280,11 @@ class GameScene: SKScene {
     }
     
     func explodePuff(puff: Puff) {
-        removeAnimal(animal: puff)
+        let action = SKAction.run {
+            self.removeAnimal(animal: puff)
+        }
+        run(SKAction.sequence([SKAction.run(puff.explode), SKAction.wait(forDuration: 0.1), action]))
+        vibrate(intensity: .heavy)
         player.loseHP()
     }
     
@@ -321,15 +326,23 @@ class GameScene: SKScene {
     
     
     func generateScoreLabel() {
+        let highscoreLabel = SKLabelNode(text: "Highscore: \(highscore)")
+        highscoreLabel.position = CGPoint(x: size.width/2, y: size.height - 20)
+        highscoreLabel.zPosition = 2
+        highscoreLabel.fontSize = 20
+        highscoreLabel.fontColor = .white
+        highscoreLabel.fontName = "SFProRounded-Bold"
+        
         self.scoreLabel = SKLabelNode(text: "Score: 0")
-        self.scoreLabel?.position = CGPoint(x: size.width/2, y: size.height - 20)
+        self.scoreLabel?.position = CGPoint(x: size.width/2, y: size.height - 45)
         self.scoreLabel?.zPosition = 2
         self.scoreLabel?.fontSize = 20
         self.scoreLabel?.fontColor = .white
-        self.scoreLabel?.fontName = "Helvetica-Bold"
+        self.scoreLabel?.fontName = "SFProRounded-Bold"
         
         if let scoreLabel = self.scoreLabel {
             addChild(scoreLabel)
+            addChild(highscoreLabel)
         }
     }
     

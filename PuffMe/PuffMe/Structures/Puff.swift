@@ -12,6 +12,7 @@ class Puff : Animal {
     var changeRate: CGFloat = 1.5
     var speed: CGFloat = 40
     var lifeTime: Int
+    var isExploding = false
     var textures: [SKTexture] = []
     
     init(lifeTime: Int, position: CGPoint, size: CGSize) {
@@ -73,6 +74,10 @@ class Puff : Animal {
         if lifeTime < 6{
             sprite.texture = textures[lifeTime - 1]
         }
+    }
+    func explode() {
+        sprite.texture = SKTexture(imageNamed: "puff6")
+        isExploding = true
     }
     func decreaseSize() {
         lifeTime -= 1

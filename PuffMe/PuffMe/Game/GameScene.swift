@@ -337,7 +337,7 @@ class GameScene: SKScene {
         lifes = []
         for i in 0..<player.hp {
             let life = SKSpriteNode(texture: SKTexture(imageNamed: "star"))
-            life.scale(to: CGSize(width: 20, height: 20))
+            life.scale(to: CGSize(width: 35, height: 35))
             life.position = CGPoint(x: 50 + (CGFloat(i) * 40), y: self.size.height - 50)
             lifes.append(life)
             addChild(life)

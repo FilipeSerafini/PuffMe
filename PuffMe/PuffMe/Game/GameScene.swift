@@ -33,16 +33,15 @@ class GameScene: SKScene {
     var highscore = UserDefaults.standard.value(forKey: "highscore") as? Int ?? 0
         
     //pause menu buttons
-    var pauseLabel: SKLabelNode
+    var pauseLabel: SKSpriteNode
     var pauseBackToMenu: SKLabelNode
     var pauseResume: SKLabelNode
     
     override init(size: CGSize) {
         //configure pause menu buttons
-        pauseLabel = SKLabelNode(text: "Paused")
-        pauseLabel.fontName = "SFProRounded-Bold"
-        pauseLabel.fontSize = 48
-        pauseLabel.fontColor = .white
+        
+        pauseLabel = SKSpriteNode(texture: SKTexture(imageNamed: "pauseLabel"))
+        pauseLabel.size = CGSize(width: 200, height: 100)
         pauseLabel.name = "pauseLabel"
         pauseLabel.position = CGPoint(x: size.width/2 ,y: size.height - 130)
         
@@ -50,7 +49,7 @@ class GameScene: SKScene {
         pauseResume.fontSize = 30
         pauseResume.fontColor = .white
         pauseResume.fontName = "SFProRounded-Regular"
-        pauseResume.position = CGPoint(x: size.width/2, y: pauseLabel.position.y - pauseLabel.fontSize - 30)
+        pauseResume.position = CGPoint(x: size.width/2, y: pauseLabel.position.y - pauseLabel.size.height - 10)
         pauseResume.name = "pauseResume"
         
         pauseBackToMenu = SKLabelNode(text: "Return to Menu")

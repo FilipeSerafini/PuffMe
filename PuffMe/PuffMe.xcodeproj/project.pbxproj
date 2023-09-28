@@ -16,6 +16,7 @@
 		A79748552AC344AE00660AC4 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79748542AC344AE00660AC4 /* Player.swift */; };
 		A79748572AC34B9100660AC4 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79748562AC34B9100660AC4 /* Utility.swift */; };
 		A79748592AC5F62900660AC4 /* TutorialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79748582AC5F62900660AC4 /* TutorialScene.swift */; };
+		B1D2BB662AC6157F00B50231 /* gameSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B1D2BB652AC6157F00B50231 /* gameSound.mp3 */; };
 		B1FFC5F22AC215B8007EC192 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FFC5F12AC215B8007EC192 /* AppDelegate.swift */; };
 		B1FFC5F42AC215B9007EC192 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B1FFC5F32AC215B9007EC192 /* GameScene.sks */; };
 		B1FFC5F62AC215B9007EC192 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B1FFC5F52AC215B9007EC192 /* Actions.sks */; };
@@ -38,6 +39,7 @@
 		A79748542AC344AE00660AC4 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		A79748562AC34B9100660AC4 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		A79748582AC5F62900660AC4 /* TutorialScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialScene.swift; sourceTree = "<group>"; };
+		B1D2BB652AC6157F00B50231 /* gameSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameSound.mp3; sourceTree = "<group>"; };
 		B1FFC5EE2AC215B8007EC192 /* PuffMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PuffMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1FFC5F12AC215B8007EC192 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1FFC5F32AC215B9007EC192 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -84,6 +86,14 @@
 			path = Structures;
 			sourceTree = "<group>";
 		};
+		B1D2BB672AC6158A00B50231 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				B1D2BB652AC6157F00B50231 /* gameSound.mp3 */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		B1FFC5E52AC215B8007EC192 = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +113,7 @@
 		B1FFC5F02AC215B8007EC192 /* PuffMe */ = {
 			isa = PBXGroup;
 			children = (
+				B1D2BB672AC6158A00B50231 /* Sounds */,
 				A5FCFFFB2AC49DEA00D381E8 /* Utility */,
 				A797484B2AC340E600660AC4 /* Structures */,
 				B1FFC60C2AC21804007EC192 /* GameOver */,
@@ -207,6 +218,7 @@
 				B1FFC5FF2AC215B9007EC192 /* Assets.xcassets in Resources */,
 				B1FFC6022AC215B9007EC192 /* LaunchScreen.storyboard in Resources */,
 				B1FFC5F62AC215B9007EC192 /* Actions.sks in Resources */,
+				B1D2BB662AC6157F00B50231 /* gameSound.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,7 +394,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DFJUFQ6A3N;
+				DEVELOPMENT_TEAM = 3BP9463775;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Puff Me";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
@@ -413,7 +425,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DFJUFQ6A3N;
+				DEVELOPMENT_TEAM = 3BP9463775;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Puff Me";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";

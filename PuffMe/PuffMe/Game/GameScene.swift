@@ -31,10 +31,7 @@ class GameScene: SKScene {
     //game variables
     var scoreLabel: SKLabelNode?
     var highscore = UserDefaults.standard.value(forKey: "highscore") as? Int ?? 0
-    
-    //tutorial variables
-    var tutorial = UserDefaults.standard.value(forKey: "tutorial") as? Bool ?? false
-    
+        
     //pause menu buttons
     var pauseLabel: SKLabelNode
     var pauseBackToMenu: SKSpriteNode
@@ -89,20 +86,9 @@ class GameScene: SKScene {
         //generates the lifes
         createLifes()
         
-        //tutorial
-//        if(!tutorial) {
-//            isPaused = true
-//            let tutorial = TutorialScene(title: "Puff", image: "puff5", tutorialDescription: "futureDescription", size: CGSize(width: size.width/2, height: size.height/2))
-//            addChild(tutorial)
-//            run(SKAction.sequence([SKAction.wait(forDuration: 5), SKAction.run {
-//                tutorial.removeFromParent()
-//            }, SKAction.run {
-//                self.isPaused = false
-//            }]))
-//            UserDefaults.standard.setValue(false, forKey: "tutorialPuff")
-//        }
+
         
-        
+        while(isPaused){}
         //generates puffs based on spawn rate
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])), withKey: "spawnPuffs")
         //generates urchins based on spawn rate
@@ -166,6 +152,7 @@ class GameScene: SKScene {
             
             //pause Button
             if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseButton" {
+                vibrate(intensity: .medium)
                 if isPaused {
                     removeChildren(in: [pauseResume, pauseBackToMenu, pauseLabel])
                 }
@@ -180,11 +167,13 @@ class GameScene: SKScene {
             }
             else
             if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseResume" {
+                vibrate(intensity: .medium)
                 removeChildren(in: [pauseResume, pauseBackToMenu, pauseLabel])
                 isPaused.toggle()
             }
             else
             if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseBackToMenu" {
+                vibrate(intensity: .medium)
                 removeChildren(in: [pauseResume, pauseBackToMenu, pauseLabel])
                 isPaused.toggle()
                 let scene = MenuScene(size: CGSize(width: size.width, height: size.height))
@@ -198,16 +187,19 @@ class GameScene: SKScene {
     }
     
     func urchinTouch() {
+        vibrate(intensity: .heavy)
         player.hp -= 1
         removeAnimal(animal: urchin!)
     }
     
     func starTouch() {
+        vibrate(intensity: .medium)
         player.hp += 1
         removeAnimal(animal: star!)
     }
     
     func puffTouch(puff: Puff) {
+        vibrate(intensity: .light)
         puff.decreaseSize()
         if puff.lifeTime < 1 {
             savePuff(puff: puff)
@@ -345,7 +337,7 @@ class GameScene: SKScene {
         lifes = []
         for i in 0..<player.hp {
             let life = SKSpriteNode(texture: SKTexture(imageNamed: "star"))
-            life.scale(to: CGSize(width: 20, height: 20))
+            life.scale(to: CGSize(width: 35, height: 35))
             life.position = CGPoint(x: 50 + (CGFloat(i) * 40), y: self.size.height - 50)
             lifes.append(life)
             addChild(life)

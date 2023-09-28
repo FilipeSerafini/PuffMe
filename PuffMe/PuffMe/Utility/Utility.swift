@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 func generateRandomPointWithin(size: CGSize) -> CGPoint {
     let randomX = CGFloat(arc4random_uniform(UInt32(size.width)))
@@ -16,4 +17,14 @@ func generateRandomPointWithin(size: CGSize) -> CGPoint {
 
 func randomInRange(min: UInt32, max: UInt32) -> Int {
     return Int(arc4random_uniform(max - min + 1) + min)
+}
+func vibrate(intensity: UIImpactFeedbackGenerator.FeedbackStyle) {
+    // Check if the device supports haptic feedback
+    if #available(iOS 10.0, *) {
+        // Create a feedback generator
+        let generator = UIImpactFeedbackGenerator(style: intensity)
+        
+        // Trigger haptic feedback
+        generator.impactOccurred()
+    }
 }

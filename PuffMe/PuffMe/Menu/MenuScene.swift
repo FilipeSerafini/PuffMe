@@ -9,7 +9,9 @@ import Foundation
 import SpriteKit
 
 class MenuScene: SKScene {
-    
+    //tutorial variables
+    var tutorial = UserDefaults.standard.value(forKey: "tutorial") as? Bool ?? false
+
     override func didMove(to view: SKView) {
         let startButton = SKSpriteNode(color: .blue, size: CGSize(width: 300, height: 100))
         startButton.position = CGPoint(x: size.width / 2, y: size.height / 2 - 50)
@@ -29,11 +31,23 @@ class MenuScene: SKScene {
             let location = touch.location(in: self)
             //touch puff
             if let node = self.atPoint(location) as? SKSpriteNode, node.name == "startButton" {
-                let scene = GameScene(size: CGSize(width: size.width, height: size.height))
-                scene.scaleMode = .aspectFill
-                
-                let transition = SKTransition.fade(withDuration: 1.0)
-                self.view?.presentScene(scene, transition: transition)
+                vibrate(intensity: .medium)
+                if(!tutorial) {
+                    let tutorial = TutorialScene(size: CGSize(width: size.width, height: size.height))
+                    tutorial.scaleMode = .aspectFill
+                    
+                    let transition = SKTransition.fade(withDuration: 1.0)
+                    self.view?.presentScene(tutorial, transition: transition)
+                    
+                    UserDefaults.standard.setValue(false, forKey: "tutorial")
+                }
+                else {
+                    let scene = GameScene(size: CGSize(width: size.width, height: size.height))
+                    scene.scaleMode = .aspectFill
+                    
+                    let transition = SKTransition.fade(withDuration: 1.0)
+                    self.view?.presentScene(scene, transition: transition)
+                }
             }
         }
     }

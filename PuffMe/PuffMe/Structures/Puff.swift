@@ -19,6 +19,20 @@ class Puff : Animal {
             textures.append(SKTexture(imageNamed: "puff\(i)"))
         }
         let sprite = SKSpriteNode(texture: textures[lifeTime - 1])
+        
+//        let desiredSize: CGFloat = 50.0 // Adjust this value to your desired height
+//
+//        // Calculate the scaling factors for width and height
+//        let scaleWidth = desiredSize / sprite.size.width
+//        let scaleHeight = desiredSize / sprite.size.height
+//
+//        // Choose the smaller of the two scaling factors to maintain aspect ratio
+//        let scale = min(scaleWidth, scaleHeight)
+//
+//        // Set the scale for both x and y dimensions
+//        sprite.xScale = scale
+//        sprite.yScale = scale
+        
         sprite.scale(to: CGSize(width: 50, height: 50))
         sprite.position = position
         sprite.name = "puff"

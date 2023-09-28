@@ -87,8 +87,6 @@ class GameScene: SKScene {
         createLifes()
         
 
-        
-        while(isPaused){}
         //generates puffs based on spawn rate
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])), withKey: "spawnPuffs")
         //generates urchins based on spawn rate
@@ -114,7 +112,7 @@ class GameScene: SKScene {
             
             //check puffs lifetime
             for puff in puffs {
-                if puff.lifeTime > 5 {
+                if puff.lifeTime > 5 && !puff.isExploding {
                     puff.sprite.removeAllActions()
                     explodePuff(puff: puff)
                 }
@@ -279,7 +277,11 @@ class GameScene: SKScene {
     }
     
     func explodePuff(puff: Puff) {
-        removeAnimal(animal: puff)
+        let action = SKAction.run {
+            self.removeAnimal(animal: puff)
+        }
+        run(SKAction.sequence([SKAction.run(puff.explode), SKAction.wait(forDuration: 0.1), action]))
+        vibrate(intensity: .heavy)
         player.loseHP()
     }
     

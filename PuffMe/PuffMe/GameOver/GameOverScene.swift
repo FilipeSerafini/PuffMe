@@ -63,6 +63,7 @@ class GameOverScene: SKScene {
             let location = touch.location(in: self)
             //restar game button
             if let node = self.atPoint(location) as? SKSpriteNode, node.name == "restartButton" {
+                vibrate(intensity: .medium)
                 let scene = GameScene(size: CGSize(width: size.width, height: size.height))
                 scene.scaleMode = .aspectFill
                 
@@ -71,6 +72,7 @@ class GameOverScene: SKScene {
             }
             //back to menu button
             if let node = self.atPoint(location) as? SKSpriteNode, node.name == "backToMenu" {
+                vibrate(intensity: .medium)
                 let scene = MenuScene(size: CGSize(width: size.width, height: size.height))
                 scene.scaleMode = .aspectFill
                 

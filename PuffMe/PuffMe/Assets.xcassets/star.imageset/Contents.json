@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "tempStar.png",
+      "filename" : "star.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "tempStar 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

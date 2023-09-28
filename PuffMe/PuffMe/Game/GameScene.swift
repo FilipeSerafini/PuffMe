@@ -72,6 +72,9 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
     override func didMove(to view: SKView) {
+        
+        SoundManager.shared.playBackgroundMusic(filename: "gameSound")
+        
         let background = SKSpriteNode(imageNamed: "background")
         background.scale(to: CGSize(width: size.width, height: size.height))
         background.position = CGPoint(x: size.width/2, y: size.height/2)

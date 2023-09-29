@@ -28,8 +28,8 @@ class MenuScene: SKScene {
         addChild(startButton)
 
         // Create a Title Label
-        let titleLabel = SKSpriteNode(imageNamed: "Title")
-        titleLabel.size = CGSize(width: 300, height: 150)
+        let titleLabel = SKSpriteNode(imageNamed: "title")
+        titleLabel.size = CGSize(width: 484, height: 134)
         titleLabel.position = CGPoint(x: size.width / 2, y: size.height - 100)
         addChild(titleLabel)
     }

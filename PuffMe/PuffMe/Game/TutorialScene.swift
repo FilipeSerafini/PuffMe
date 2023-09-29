@@ -12,7 +12,7 @@ class TutorialScene: GameScene {
     var title: SKLabelNode?
     var tutDescription: SKLabelNode?
     var imageSprite: SKSpriteNode?
-    var continueButton: SKLabelNode?
+    var continueButton: SKSpriteNode?
     var currPage = 1
     
     override func didMove(to view: SKView) {
@@ -40,6 +40,7 @@ class TutorialScene: GameScene {
         newtutDescription.fontSize = descriptionFontSize
         newtutDescription.position = CGPoint(x: size.width / 2, y: size.height - 180)
         newtutDescription.color = .white
+        newtutDescription.horizontalAlignmentMode = .center
         newtutDescription.numberOfLines = 0  // Allow multiple lines
         newtutDescription.preferredMaxLayoutWidth = descriptionWidth
         newtutDescription.text = tutDescriptionText
@@ -59,25 +60,11 @@ class TutorialScene: GameScene {
         imageSprite = imageLabel
         
         
-        let newContinueButton = SKLabelNode(text: "Continue")
-        newContinueButton.fontSize = 30
-        newContinueButton.position = CGPoint(x: size.width/2, y: size.height - 350)
-        newContinueButton.color = .white
-        newContinueButton.fontName = "Helvetica-Bold"
-        newContinueButton.scene?.backgroundColor = .black
+        let newContinueButton = SKSpriteNode(imageNamed: "pauseContinue")
+        newContinueButton.position = CGPoint(x: size.width/2, y: size.height - 330)
+        newContinueButton.size = CGSize(width: 260, height: 100)
         newContinueButton.name = "continue"
         continueButton = newContinueButton
-        
-        
-        
-        // Create a background with curved borders for the "Continue" button
-        let continueButtonBackground = SKShapeNode(rect: CGRect(x: 0, y: 0, width: newContinueButton.frame.size.width + 20, height: newContinueButton.frame.size.height + 20), cornerRadius: 10)
-        continueButtonBackground.fillColor = .black
-        continueButtonBackground.strokeColor = .black
-        continueButtonBackground.position = CGPoint(x: size.width / 2 - newContinueButton.frame.size.width/2 - 10, y: size.height - 362.5)
-        continueButtonBackground.zPosition = -1
-        addChild(continueButtonBackground)
-        
         
         addChild(title!)
         addChild(tutDescription!)
@@ -87,7 +74,7 @@ class TutorialScene: GameScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            if let node = self.atPoint(location) as? SKLabelNode, node.name == "continue" {
+            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "continue" {
                 vibrate(intensity: .medium)
                 nextPage()
             }

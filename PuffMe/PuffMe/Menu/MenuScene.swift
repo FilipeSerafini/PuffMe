@@ -20,17 +20,21 @@ class MenuScene: SKScene {
         background.zPosition = -2
         addChild(background)
         
-        let startButton = SKLabelNode(text: "Start Game")
-        startButton.fontSize = 48
-        startButton.fontName = "SFProRounded-Bold"
-        startButton.position = CGPoint(x: size.width / 2, y: size.height / 2 - 50)
+        let puffMenu = SKSpriteNode(imageNamed: "puffMenu")
+        puffMenu.size = CGSize(width: 238, height: 238)
+        puffMenu.position = CGPoint(x: size.width/2, y: size.height/2)
+        addChild(puffMenu)
+        
+        let startButton = SKSpriteNode(texture: SKTexture(imageNamed: "playMenu"))
+        startButton.size = CGSize(width: 261, height: 100)
+        startButton.position = CGPoint(x: size.width / 2, y: size.height / 2 - 125)
         startButton.name = "startButton" // Set a name for identifying the node later
         addChild(startButton)
 
         // Create a Title Label
         let titleLabel = SKSpriteNode(imageNamed: "title")
-        titleLabel.size = CGSize(width: 484, height: 134)
-        titleLabel.position = CGPoint(x: size.width / 2, y: size.height - 100)
+        titleLabel.size = CGSize(width: 484/2, height: 134/2)
+        titleLabel.position = CGPoint(x: size.width / 2, y: size.height - 75)
         addChild(titleLabel)
     }
     
@@ -38,7 +42,7 @@ class MenuScene: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             //touch puff
-            if let node = self.atPoint(location) as? SKLabelNode, node.name == "startButton" {
+            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "startButton" {
                 vibrate(intensity: .medium)
                 if(!tutorial) {
                     let tutorial = TutorialScene(size: CGSize(width: size.width, height: size.height))

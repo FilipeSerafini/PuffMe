@@ -14,6 +14,8 @@ class SoundManager {
     static let shared = SoundManager()
     
     private var backgroundMusicPlayer: AVAudioPlayer?
+    private var soundEffectPlayer: AVAudioPlayer?
+
     private var isBackgroundMusicPaused = false
     
     
@@ -24,7 +26,7 @@ class SoundManager {
             do {
                 backgroundMusicPlayer = try AVAudioPlayer(contentsOf: url)
                 backgroundMusicPlayer?.numberOfLoops = -1  // Loop indefinitely
-                backgroundMusicPlayer?.volume = 0.2
+                backgroundMusicPlayer?.volume = 0.05
                 backgroundMusicPlayer?.prepareToPlay()
                 backgroundMusicPlayer?.play()
             } catch {
@@ -51,5 +53,17 @@ class SoundManager {
         backgroundMusicPlayer?.stop()
         isBackgroundMusicPaused = false
     }
-    
+    func playSoundEffect(filename: String) {
+            if let url = Bundle.main.url(forResource: filename, withExtension: "mp3") {
+                do {
+                    soundEffectPlayer = try AVAudioPlayer(contentsOf: url)
+                    soundEffectPlayer?.numberOfLoops = 0  // Play sound once
+                    soundEffectPlayer?.volume = 1.0  // Adjust the volume as needed
+                    soundEffectPlayer?.prepareToPlay()
+                    soundEffectPlayer?.play()
+                } catch {
+                    print("Error playing sound effect: \(error.localizedDescription)")
+                }
+            }
+        }
 }

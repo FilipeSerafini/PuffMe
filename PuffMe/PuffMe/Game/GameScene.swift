@@ -363,7 +363,7 @@ class GameScene: SKScene {
         }
         if player.hp != lifes.count {
             for life in lifes {
-                life.removeFromParent()
+                life.texture = SKTexture(imageNamed: "emptyStar")
             }
             createLifes()
         }

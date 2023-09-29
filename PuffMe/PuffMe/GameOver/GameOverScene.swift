@@ -37,17 +37,17 @@ class GameOverScene: SKScene {
         addChild(titleLabel)
         
         //show score
-        let scoreLabel = SKLabelNode(text: "Your score: \(score).")
+        let scoreLabel = SKLabelNode(text: "Your score: \(score)")
         scoreLabel.fontSize = 36
-        scoreLabel.fontColor = UIColor(red: 178, green: 234, blue: 230, alpha: 1)
+        scoreLabel.fontColor = UIColor(named: "scoreColor")
         scoreLabel.fontName = "SFProRounded-Bold"
         scoreLabel.position = CGPoint(x: size.width / 2, y: size.height - 220)
         addChild(scoreLabel)
         
         //show highscore
-        let highscoreLabel = SKLabelNode(text: "Highscore: \(highscore).")
+        let highscoreLabel = SKLabelNode(text: "Highscore: \(highscore)")
         highscoreLabel.fontSize = 24
-        highscoreLabel.fontColor = UIColor(red: 178, green: 234, blue: 230, alpha: 1)
+        highscoreLabel.fontColor = UIColor(named: "highscoreColor")
         highscoreLabel.fontName = "SFProRounded-Bold"
         highscoreLabel.position = CGPoint(x: size.width / 2, y: size.height - 250)
         addChild(highscoreLabel)

@@ -330,14 +330,14 @@ class GameScene: SKScene {
         highscoreLabel.position = CGPoint(x: 100, y: size.height - 65)
         highscoreLabel.zPosition = 2
         highscoreLabel.fontSize = 18
-        highscoreLabel.fontColor = UIColor(red: 178, green: 234, blue: 230, alpha: 1)
+        highscoreLabel.fontColor = UIColor(named: "highscoreColor")
         highscoreLabel.fontName = "SFProRounded-Bold"
         
         self.scoreLabel = SKLabelNode(text: "Score: 0")
         self.scoreLabel?.position = CGPoint(x: 100, y: size.height - 40)
         self.scoreLabel?.zPosition = 2
         self.scoreLabel?.fontSize = 30
-        self.scoreLabel?.fontColor = UIColor(red: 225, green: 246, blue: 245, alpha: 1)
+        self.scoreLabel?.fontColor = UIColor(named: "scoreColor")
         self.scoreLabel?.fontName = "SFProRounded-Bold"
         
         if let scoreLabel = self.scoreLabel {

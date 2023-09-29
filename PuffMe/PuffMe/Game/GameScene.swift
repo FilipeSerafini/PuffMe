@@ -34,8 +34,8 @@ class GameScene: SKScene {
         
     //pause menu buttons
     var pauseLabel: SKSpriteNode
-    var pauseBackToMenu: SKLabelNode
-    var pauseResume: SKLabelNode
+    var pauseBackToMenu: SKSpriteNode
+    var pauseResume: SKSpriteNode
     
     override init(size: CGSize) {
         //configure pause menu buttons
@@ -45,26 +45,24 @@ class GameScene: SKScene {
         pauseLabel.name = "pauseLabel"
         pauseLabel.position = CGPoint(x: size.width/2 ,y: size.height - 130)
         
-        pauseResume = SKLabelNode(text: "Resume Game")
-        pauseResume.fontSize = 30
-        pauseResume.fontColor = .white
-        pauseResume.fontName = "SFProRounded-Regular"
-        pauseResume.position = CGPoint(x: size.width/2, y: pauseLabel.position.y - pauseLabel.size.height - 10)
+        pauseBackToMenu = SKSpriteNode(imageNamed: "returnMenu")
+        pauseBackToMenu.size = CGSize(width: 260, height: 100)
+        pauseBackToMenu.position = CGPoint(x: size.width/2, y: pauseLabel.position.y - pauseLabel.size.height - 10)
+        pauseBackToMenu.name = "pauseBackToMenu"
+        
+        pauseResume = SKSpriteNode(imageNamed: "pauseContinue")
+        pauseResume.size = CGSize(width: 260, height: 100)
+        pauseResume.position = CGPoint(x: size.width/2, y: pauseBackToMenu.position.y - pauseBackToMenu.size.height/2 - 30)
         pauseResume.name = "pauseResume"
         
-        pauseBackToMenu = SKLabelNode(text: "Return to Menu")
-        pauseBackToMenu.fontSize = 30
-        pauseBackToMenu.fontColor = .white
-        pauseBackToMenu.fontName = "SFProRounded-Bold"
-        pauseBackToMenu.position = CGPoint(x: size.width/2, y: pauseResume.position.y - pauseResume.fontSize - 30)
-        pauseBackToMenu.name = "pauseBackToMenu"
+       
         
         let pauseButtonTexture = SKTexture(imageNamed: "pauseButton")
         let pauseButton = SKSpriteNode(texture: pauseButtonTexture)
         
         pauseButton.name = "pauseButton"
         pauseButton.size = CGSize(width: 50, height: 50)
-        pauseButton.position = CGPoint(x: size.width - pauseButton.size.width, y: size.height - pauseButton.size.height)
+        pauseButton.position = CGPoint(x: 63, y: 18 + pauseButton.size.height/2)
         pauseButton.zPosition = 1 // Adjust this value to make sure the button is above other nodes.
         
         super.init(size: size)
@@ -111,7 +109,9 @@ class GameScene: SKScene {
             
             //updates score
             self.scoreLabel?.text = "Score: \(player.score)"
-           
+            self.scoreLabel?.fontName = "SFProRounded-Bold"
+            scoreLabel?.fontSize = 30
+            scoreLabel?.position
             
             //check puffs lifetime
             for puff in puffs {
@@ -166,13 +166,13 @@ class GameScene: SKScene {
                 
             }
             else
-            if let node = self.atPoint(location) as? SKLabelNode, node.name == "pauseResume" {
+            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseResume" {
                 vibrate(intensity: .medium)
                 removeChildren(in: [pauseResume, pauseBackToMenu, pauseLabel])
                 isPaused.toggle()
             }
             else
-            if let node = self.atPoint(location) as? SKLabelNode, node.name == "pauseBackToMenu" {
+            if let node = self.atPoint(location) as? SKSpriteNode, node.name == "pauseBackToMenu" {
                 vibrate(intensity: .medium)
                 removeChildren(in: [pauseResume, pauseBackToMenu, pauseLabel])
                 isPaused.toggle()
@@ -327,17 +327,17 @@ class GameScene: SKScene {
     
     func generateScoreLabel() {
         let highscoreLabel = SKLabelNode(text: "Highscore: \(highscore)")
-        highscoreLabel.position = CGPoint(x: size.width/2, y: size.height - 20)
+        highscoreLabel.position = CGPoint(x: 100, y: size.height - 65)
         highscoreLabel.zPosition = 2
-        highscoreLabel.fontSize = 20
-        highscoreLabel.fontColor = .white
+        highscoreLabel.fontSize = 18
+        highscoreLabel.fontColor = UIColor(red: 178, green: 234, blue: 230, alpha: 1)
         highscoreLabel.fontName = "SFProRounded-Bold"
         
         self.scoreLabel = SKLabelNode(text: "Score: 0")
-        self.scoreLabel?.position = CGPoint(x: size.width/2, y: size.height - 45)
+        self.scoreLabel?.position = CGPoint(x: 100, y: size.height - 40)
         self.scoreLabel?.zPosition = 2
-        self.scoreLabel?.fontSize = 20
-        self.scoreLabel?.fontColor = .white
+        self.scoreLabel?.fontSize = 30
+        self.scoreLabel?.fontColor = UIColor(red: 225, green: 246, blue: 245, alpha: 1)
         self.scoreLabel?.fontName = "SFProRounded-Bold"
         
         if let scoreLabel = self.scoreLabel {
@@ -351,7 +351,7 @@ class GameScene: SKScene {
         for i in 0..<player.hp {
             let life = SKSpriteNode(texture: SKTexture(imageNamed: "star"))
             life.scale(to: CGSize(width: 35, height: 35))
-            life.position = CGPoint(x: 50 + (CGFloat(i) * 40), y: self.size.height - 50)
+            life.position = CGPoint(x: size.width - 50 - (CGFloat(i) * 40), y: self.size.height - 50)
             lifes.append(life)
             addChild(life)
         }

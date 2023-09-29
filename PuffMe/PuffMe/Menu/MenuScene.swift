@@ -20,7 +20,7 @@ class MenuScene: SKScene {
         background.zPosition = -2
         addChild(background)
         
-        let puffMenu = SKSpriteNode(imageNamed: "puffMenu")
+        let puffMenu = SKSpriteNode(imageNamed: "puffmenu")
         puffMenu.size = CGSize(width: 238, height: 238)
         puffMenu.position = CGPoint(x: size.width/2, y: size.height/2)
         addChild(puffMenu)

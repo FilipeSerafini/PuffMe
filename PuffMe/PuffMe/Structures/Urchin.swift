@@ -9,7 +9,7 @@ import Foundation
 import SpriteKit
 
 class Urchin : Animal {
-    var texture = SKTexture(imageNamed: "urchin")
+    var texture = SKTexture(imageNamed: "Urchin")
     init() {
         let sprite = SKSpriteNode(texture: texture)
         sprite.scale(to: CGSize(width: 50, height: 50))

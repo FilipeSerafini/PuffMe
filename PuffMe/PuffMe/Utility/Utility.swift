@@ -28,3 +28,10 @@ func vibrate(intensity: UIImpactFeedbackGenerator.FeedbackStyle) {
         generator.impactOccurred()
     }
 }
+func squared(x: CGFloat, y: Int) -> CGFloat{
+    var result = x
+    for _ in 1...y {
+        result *= x
+    }
+    return x
+}

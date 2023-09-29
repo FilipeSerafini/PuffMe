@@ -41,7 +41,7 @@ class GameScene: SKScene {
         //configure pause menu buttons
         
         pauseLabel = SKSpriteNode(texture: SKTexture(imageNamed: "pauseLabel"))
-        pauseLabel.size = CGSize(width: 200, height: 100)
+        pauseLabel.scale(to: CGSize(width: 274, height: 70))
         pauseLabel.name = "pauseLabel"
         pauseLabel.position = CGPoint(x: size.width/2 ,y: size.height - 130)
         

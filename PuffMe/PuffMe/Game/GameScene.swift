@@ -137,7 +137,7 @@ class GameScene: SKScene {
                 //touch puff
                 if let node = self.atPoint(location) as? SKSpriteNode, node.name == "puff" {
                     guard let puff = puffs.first(where: {$0.sprite.hashValue == node.hashValue}) else {return}
-                    SoundManager.shared.playSoundEffect(filename: "puff")
+                    //SoundManager.shared.playSoundEffect(filename: "puff")
                     puffTouch(puff: puff)
                 }
                 //touch urchin
@@ -316,7 +316,7 @@ class GameScene: SKScene {
             UserDefaults.standard.setValue(player.score, forKey: "highscore")
             
         }
-        
+        removeAllChildren()
         let scene = GameOverScene(size: CGSize(width: size.width, height: size.height), score: player.score, highscore: highscore)
         scene.scaleMode = .aspectFill
         

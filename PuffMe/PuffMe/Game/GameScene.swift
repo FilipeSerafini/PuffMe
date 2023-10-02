@@ -31,7 +31,7 @@ class GameScene: SKScene {
     //game variables
     var scoreLabel: SKLabelNode?
     var highscore = UserDefaults.standard.value(forKey: "highscore") as? Int ?? 0
-        
+    
     //pause menu buttons
     var pauseLabel: SKSpriteNode
     var pauseBackToMenu: SKSpriteNode
@@ -55,7 +55,7 @@ class GameScene: SKScene {
         pauseResume.position = CGPoint(x: size.width/2, y: pauseBackToMenu.position.y - pauseBackToMenu.size.height/2 - 30)
         pauseResume.name = "pauseResume"
         
-       
+        
         
         let pauseButtonTexture = SKTexture(imageNamed: "pauseButton")
         let pauseButton = SKSpriteNode(texture: pauseButtonTexture)
@@ -74,6 +74,8 @@ class GameScene: SKScene {
     }
     override func didMove(to view: SKView) {
         
+        
+        
         SoundManager.shared.playBackgroundMusic(filename: "gameSound")
         
         let background = SKSpriteNode(imageNamed: "background")
@@ -87,47 +89,44 @@ class GameScene: SKScene {
         //generates the lifes
         createLifes()
         
-
+        
         //generates puffs based on spawn rate
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(generatePuff), SKAction.wait(forDuration: spawnRate)])), withKey: "spawnPuffs")
         //generates urchins based on spawn rate
         run(SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: urchinSpawnRate), SKAction.run(generateUrchin)])), withKey: "spawnUrchin")
         //generates stars bases on spawn rate
         run(SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: starSpawnTime), SKAction.run(generateStar)])))
-
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
-        if !isPaused{
-            //generates star if player hp is not full
-            if player.hp < 3 && star == nil {
-                run(SKAction.sequence([SKAction.run(generateStar), SKAction.wait(forDuration: starSpawnTime)]))
+        //generates star if player hp is not full
+        if player.hp < 3 && star == nil {
+            run(SKAction.sequence([SKAction.run(generateStar), SKAction.wait(forDuration: starSpawnTime)]))
+        }
+        
+        //checks for playes life
+        checkLifes()
+        
+        //updates score
+        self.scoreLabel?.text = "Score: \(player.score)"
+        
+        //check puffs lifetime
+        for puff in puffs {
+            if puff.lifeTime > 5 && !puff.isExploding {
+                puff.sprite.removeAllActions()
+                explodePuff(puff: puff)
+            }
+            if puff.lifeTime < 1 {
+                puff.sprite.removeAllActions()
+                savePuff(puff: puff)
             }
             
-            //checks for playes life
-            checkLifes()
-            
-            //updates score
-            self.scoreLabel?.text = "Score: \(player.score)"
-            self.scoreLabel?.fontName = "SFProRounded-Bold"
-            scoreLabel?.fontSize = 30
-            scoreLabel?.position
-            
-            //check puffs lifetime
-            for puff in puffs {
-                if puff.lifeTime > 5 && !puff.isExploding {
-                    puff.sprite.removeAllActions()
-                    explodePuff(puff: puff)
-                }
-                if puff.lifeTime < 1 {
-                    savePuff(puff: puff)
-                }
-                
-                //check player Hp
-                if player.hp <= 0 {
-                    gameOver()
-                }
+            //check player Hp
+            if player.hp <= 0 {
+                gameOver()
             }
+            
         }
     }
     
@@ -138,7 +137,7 @@ class GameScene: SKScene {
                 //touch puff
                 if let node = self.atPoint(location) as? SKSpriteNode, node.name == "puff" {
                     guard let puff = puffs.first(where: {$0.sprite.hashValue == node.hashValue}) else {return}
-                    SoundManager.shared.playSoundEffect(filename: "puff")
+                    //SoundManager.shared.playSoundEffect(filename: "puff")
                     puffTouch(puff: puff)
                 }
                 //touch urchin
@@ -256,11 +255,11 @@ class GameScene: SKScene {
         
         urchin!.sprite.run(SKAction.sequence(actions))
         urchin!.sprite.run(rotationAction)
-
+        
     }
     
     func savePuff(puff: Puff) {
-        removeAnimal(animal: puff)
+        self.removeAnimal(animal: puff)
         player.increaseScore()
         
         //updates difficulty
@@ -275,6 +274,7 @@ class GameScene: SKScene {
                 puff.id == animal.id
             }
         }
+        animal.sprite.removeAllActions()
         animal.sprite.removeFromParent()
     }
     
@@ -303,7 +303,7 @@ class GameScene: SKScene {
             let updatedSpawnAction = SKAction.sequence([
                 SKAction.run(generateUrchin),
                 SKAction.wait(forDuration: urchinSpawnRate)
-                            ])
+            ])
             let updatedSpawnForeverAction = SKAction.repeatForever(updatedSpawnAction)
             self.run(updatedSpawnForeverAction, withKey: "spawnUrchin")
         }
@@ -316,7 +316,7 @@ class GameScene: SKScene {
             UserDefaults.standard.setValue(player.score, forKey: "highscore")
             
         }
-        
+        removeAllChildren()
         let scene = GameOverScene(size: CGSize(width: size.width, height: size.height), score: player.score, highscore: highscore)
         scene.scaleMode = .aspectFill
         
@@ -332,16 +332,16 @@ class GameScene: SKScene {
         highscoreLabel.horizontalAlignmentMode = .center
         highscoreLabel.fontSize = 18
         highscoreLabel.fontColor = UIColor(named: "highscoreColor")
-        highscoreLabel.fontName = "SFProRounded-Bold"
+        //highscoreLabel.fontName = "SFProRounded-Bold"
         
         self.scoreLabel = SKLabelNode(text: "Score: 0")
         self.scoreLabel?.position = CGPoint(x: 100, y: size.height - 40)
         self.scoreLabel?.zPosition = 2
         self.scoreLabel?.horizontalAlignmentMode = .center
-
+        
         self.scoreLabel?.fontSize = 30
         self.scoreLabel?.fontColor = UIColor(named: "scoreColor")
-        self.scoreLabel?.fontName = "SFProRounded-Bold"
+        // self.scoreLabel?.fontName = "SFProRounded-Bold"
         
         if let scoreLabel = self.scoreLabel {
             addChild(scoreLabel)

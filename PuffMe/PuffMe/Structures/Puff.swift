@@ -47,7 +47,8 @@ class Puff : Animal {
         let wait = SKAction.wait(forDuration: 1)
         let move = puffMove(size: size)
         sprite.run(SKAction.repeatForever(SKAction.sequence([grow, wait])))
-        sprite.run(SKAction.repeatForever(move), withKey: "move")
+        //sprite.run(SKAction.repeatForever(move), withKey: "move")
+        sprite.run(move, withKey: "move")
     }
     
     
@@ -85,5 +86,8 @@ class Puff : Animal {
         if lifeTime > 0 {
             sprite.texture = textures[lifeTime - 1]
         }
+    }
+    deinit {
+        print("puff morrendo")
     }
 }

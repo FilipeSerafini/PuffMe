@@ -56,6 +56,8 @@ class MenuScene: SKScene {
                 else {
                     let scene = GameScene(size: CGSize(width: size.width, height: size.height))
                     scene.scaleMode = .aspectFill
+                    scene.view?.showsFPS = true
+                    scene.view?.showsNodeCount = true
                     
                     let transition = SKTransition.fade(withDuration: 1.0)
                     self.view?.presentScene(scene, transition: transition)

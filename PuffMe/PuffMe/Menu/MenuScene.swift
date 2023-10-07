@@ -54,6 +54,7 @@ class MenuScene: SKScene {
                     UserDefaults.standard.setValue(true, forKey: "tutorial")
                 }
                 else {
+                    print(size)
                     let scene = GameScene(size: CGSize(width: size.width, height: size.height))
                     scene.scaleMode = .aspectFill
                     scene.view?.showsFPS = true

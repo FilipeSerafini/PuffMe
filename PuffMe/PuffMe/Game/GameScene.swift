@@ -327,21 +327,21 @@ class GameScene: SKScene {
     
     func generateScoreLabel() {
         let highscoreLabel = SKLabelNode(text: "Highscore: \(highscore)")
-        highscoreLabel.position = CGPoint(x: 111, y: size.height - 65)
+        highscoreLabel.position = CGPoint(x: 50, y: size.height - 65)
         highscoreLabel.zPosition = 2
-        highscoreLabel.horizontalAlignmentMode = .center
+        highscoreLabel.horizontalAlignmentMode = .left
         highscoreLabel.fontSize = 18
         highscoreLabel.fontColor = UIColor(named: "highscoreColor")
-        //highscoreLabel.fontName = "SFProRounded-Bold"
+        highscoreLabel.fontName = "SFProRounded-Bold"
         
         self.scoreLabel = SKLabelNode(text: "Score: 0")
-        self.scoreLabel?.position = CGPoint(x: 100, y: size.height - 40)
+        self.scoreLabel?.position = CGPoint(x: 50, y: size.height - 40)
         self.scoreLabel?.zPosition = 2
-        self.scoreLabel?.horizontalAlignmentMode = .center
+        self.scoreLabel?.horizontalAlignmentMode = .left
         
         self.scoreLabel?.fontSize = 30
         self.scoreLabel?.fontColor = UIColor(named: "scoreColor")
-        // self.scoreLabel?.fontName = "SFProRounded-Bold"
+        self.scoreLabel?.fontName = "SFProRounded-Bold"
         
         if let scoreLabel = self.scoreLabel {
             addChild(scoreLabel)
